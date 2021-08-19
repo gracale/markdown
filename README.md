@@ -639,3 +639,37 @@ var a ={
   foo:1
 }//这是个对象
 ```
+
+## 8.19
+电话号码一定要用字符串，数字不行<br>
+JS有7+1种数据类型<br>
+number<br>
+string<br>
+symbol<br>
+undefined<br>
+null<br>
+object = {array,function,date}<br>
+数组函数日期，都是object<br>
+四基两空一对象<br>
+最新的数据类型bigint，用不到先不急<br>
+
+1.23e4=1.23*10^4 科学计数法<br>
+***
+number的特殊值
+>正零+0 负零-0 和 零0
+
+>正无穷+Infinity 负无穷-Infinity
+
+>NaN=Not a Number 不是一个数字，或者说不确定是哪个数字。比如0/0=NaN
+***
+bool的falsy值
+>falsy意为与相当于false又不是false的值<br>
+有5个，分别是 undefined null 0 NaN ''
+
+只有这5个+false是假值<br>
+还记得&&吗，取第一个假值或最末尾的真值<br>
+```js
+1 && 2
+1 && 0
+```
+输出2和0，因为0是falsy<br>
