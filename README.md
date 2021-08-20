@@ -673,3 +673,46 @@ bool的falsy值
 1 && 0
 ```
 输出2和0，因为0是falsy<br>
+
+## 8.20
+var a = 1 <br>
+现在基本弃用var<br>
+let a = 1 <br>
+作用于一个{}大括号里，可以不赋值，for配合let就不会有一些怪问题<br>
+const a = 1<br>
+const和let几乎相同，唯一区别，声明时要赋值，且不可更改。<br>
+
+数字变字符串<br>
+```js
+let a = 1
+a+''
+```
+字符串变数字
+```js
+let a = '123'
+a-0
+```
+用String(a)也行，但有点小bug
+```js
+String(1000000000000000000000000000000000000000)
+```
+后面很多零会转换成"1e+39"<br>
+任意数据转布尔<br>
+```js
+Boolean(1)
+!!1
+```
+一个！代表取该数据的反布尔，两个！就是原布尔了。<br>
+
+任意数据转字符串<br>
+true.toString()<br>
+得到"true"<br>
+1.toString()，提示bug。<br>
+因为js默认1.之后你是要写一个小数，看到你写个t就觉得你写错了。<br>
+得改成(1).toString()<br>
+或者1..toString()<br>
+因为js认为1.是个正常数……<br>
+js的更多bug详见https://bonsaiden.github.io/JavaScript-Garden/zh/
+
+***
+
