@@ -716,3 +716,112 @@ js的更多bug详见https://bonsaiden.github.io/JavaScript-Garden/zh/
 
 ***
 
+对象<br>
+键名是字符串<br>
+声明对象的两种语法<br>
+```js
+let obj = {key:'value',属性名:'属性值'}
+let obj = new Object ({key:'value'})//标准写法
+```
+键名引号有时可以省略<br>
+比如<br>
+```js
+let obj = {1e2:true,}
+```
+键名会自动转换为'100'<br>
+[]方括号，能取该变量的值作为键值<br>
+```js
+let a = 'xxx'
+let obj = {
+  [a] : 1234
+}
+```
+obj输出为xxx:1234<br>
+除了字符串，symbol也能做属性名。<br>
+```js
+let a = symbol()
+let obj = {[a]:'hello'}
+```
+
+## 8.21
+属性的增删改查
+***
+
+删
+```js
+let obj = {name:'frank',age:18}
+obj.name = undefined //仅删除属性值
+delete obj.name //整个属性都删除
+```
+检查整个属性是否删除成功了
+```js
+'name' in obj //true=删了，false=没删
+//一定要记得加引号啊！
+```
+检查是否删除属性值但没删属性名
+```js
+'name' in obj &&obj.name === undefined
+```
+不能单obj.name === undefined，如果删了整个属性，这样也返回true<br>
+
+读
+```js
+let obj = {name:'frank',age:18}
+Object.keys(obj) //读取属性名
+Object.values(obj)//读取值
+Object.entries(obj)//读取属性名+值
+
+Object.dir(obj)//读取属性名+公共属性名+值+公共值
+
+'toString' in obj//判断obj是否包含toString属性，存在true
+obj.hasOwnProperty('toString')
+//判断toString属性是否是obj的私有属性
+//true为私有，false不是私有
+```
+所有对象都有原型，对象的原型也是对象<br>
+
+查<br>
+```js
+obj['key']//查单个属性的值
+obj.key //这里的key是字符串，不是变量
+console.dir(obj)//查obj的所有属性
+```
+
+改或增<br>
+直接赋值
+```js
+let obj = {name:'frank'} //直接覆盖之前的，无论是否存在
+obj.name = 'frank' //给obj的'name'属性修改值为'frank'
+
+let key ='name';obj[key]='frank'//一般没必要用这个
+//新建一个属性name，赋值frank再扔到obj里
+```
+批量赋值
+```js
+Object.assign(obj,{age:18,gender:'man'})
+```
+改增共有属性<br>
+改原型都是高手做的，新手了解一下即可
+```js
+obj.__proto__.toString='xxx'//不推荐改带下划线的东西
+Object.prototype.toString='xxx'
+```
+增加公共属性
+```js
+let common = {nation:'CN',hair:'black'}
+//构造一个common对象
+let obj1 = Object.create(common)
+//让common的所有属性成为obj1对象的公共属性
+obj1.name='sam'
+let obj2 = Object.create(common)
+obj2.name='amy'
+//此时两个obj的name属性不同，nation和hair属性相同
+```
+公共属性重新关联会抹掉私有属性
+```js
+let obj1 = Object.create(common)
+obj1.name='sam'
+let obj1 = Object.create(common)
+//此时obj1没name属性了
+```
+所以一旦关联就不要轻易修改关联
