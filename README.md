@@ -825,3 +825,138 @@ let obj1 = Object.create(common)
 //此时obj1没name属性了
 ```
 所以一旦关联就不要轻易修改关联
+***
+## 8.22
+构造一个边长5正方形面积的函数<br>
+```js
+let square={
+  width:5,
+  getArea(){
+    return this.width * this.width
+  }
+}
+```
+square.getArea()得25<br>
+
+代码规范<br>
+>所有构造函数（专门用于创建对象的函数）首字母大写
+所有被构造出来的对象，首字母小写
+
+>new 后面的函数，使用名词形式
+如 new Person()、new Object()
+其他函数，一般使用动词开头
+如 createSquare(5)、createElement('div')
+
+
+数组对象
+```js
+let arr = [1,2,3]
+let arr = new Array(1,2,3) // 元素为 1,2,3
+let arr = new Array(3) // 长度为 3
+```
+
+函数对象
+```js
+let fn = (x,y) => x+y
+let fn = new Function('x','y', 'return x+y')
+```
+***
+作业<br>
+一个 原型Person 构造函数
+```js
+function Person(name,age){
+    this.name = name
+    this.age = age
+}
+Person.prototype.sayHi = function(){
+    console.log('你好我叫'+this.name+'.年龄'+this.age)
+}
+
+let person = new Person('frank', 18)
+person.name === 'frank' // true
+person.age === 18 // true
+person.sayHi() // 打印出「你好，我叫 frank」
+
+let person2 = new Person('jack', 19)
+person2.name === 'jack' // true
+person2.age === 19 // true
+person2.sayHi() // 打印出「你好，我叫 jack」
+```
+一个 class型Person 函数
+```js
+class Person{
+  constructor(name,age){
+    this.name = name
+    this.age = age
+  }
+  sayHi(){
+    console.log('你好我叫'+this.name+'.年龄'+this.age)
+  }
+  }
+let person = new Person('frank', 18)
+person.name === 'frank' // true
+person.age === 18 // true
+person.sayHi() // 打印出「你好，我叫 frank」
+
+let person2 = new Person('jack', 19)
+person2.name === 'jack' // true
+person2.age === 19 // true
+person2.sayHi() // 打印出「你好，我叫 jack」
+```
+
+new X() 自动做了四件事情
+* 自动创建空对象
+* 自动为空对象关联原型，原型地址指定为 X.prototype
+* 自动将空对象作为 this 关键字运行构造函数
+* 自动 return this
+***
+x的原型等价于x.__ proto __ 所指的对象 ，有时为了方便，我们可以认为x的原型等价于x.__ proto __ 
+>一个对象的原型指的是这个对象与其他同类对象的公有属性的集合，比如 obj1 和 ob2 同时拥有 toString / valueOf，那么 toString / valueOf 等属性组成的对象，就是 obj1 和 obj2 的原型，这个原型的地址一般储存在构造函数的 prototype 里
+
+x.__ proto __和Object.prototype
+存储着同一个对象的地址，这个对象就是x的原型
+***
+关于prototype属性
+* 所有函数一出生就有一个 prototype 属性（除了箭头函数）
+* 所有 prototype 一出生就有一个 constructor 属性
+* 所有 constructor 属性一出生就保存了对应的函数的地址
+* 如果一个函数不是构造函数，它依然拥有 prototype 属性，只不过这个属性暂时没什么用
+* 如果一个对象不是函数，那么这个对象一般来说没有 prototype 属性，但这个对象一般一定会有  __ proto __ 属性
+***
+类型和类的区别<br>
+类型是对 JS 中数据的分类<br>
+类是对 JS 中对象的分类<br>
+JS 中的类型有：数字、字符串、布尔、符号Symbol、null、undefined、对象<br>
+JS 中的类有：对象 Object、数组 Array、函数 Function 等<br>
+***
+Object.prototye 是「Object 构造出来的对象 obj」的原型，即 
+```js
+obj.__proto__ === Object.prototype
+```
+Object.__ proto __ 是 Object 的原型，由于 Object 是函数，而所有函数的原型都是 Function.prototype，所以
+```js
+Object.__proto__ === Function.prototype
+```
+Object.prototye 不是 Object 的原型，Object.__ proto __ 才是 Object 的原型<br>
+
+```js
+//难度1
+let x ={}
+//x的原型是x.__proto__
+x.__proto__===Object.prototype
+//x.__proto__的值就是O.proto的值
+
+//难度2
+let square = new Square(5)
+//square的原型是Square.prototype
+//square.__proto__ 的值也是Square.prototype
+
+//难度3
+Object.prototype 是哪个函数构造的？
+//没有答案
+Object.prototype 的原型是什么
+//没有原型
+Object.prototype.__proto__===
+//值为null
+```
+
