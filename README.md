@@ -959,4 +959,65 @@ Object.prototype 的原型是什么
 Object.prototype.__proto__===
 //值为null
 ```
+***
 
+## 8.24
+JS的数组实际上还是对象……<br>
+这意味着数组可以有任何key
+```js
+let arr = [1,2,3]
+arr['xxx']=1
+
+arr.xxx //输出1
+```
+创建数组
+```js
+let arr=[1,2,3]
+let arr = new Array(1,2,3)//等价于上一行
+let arr = new Array(3)//创造一个长度为3的空数组
+arr[0]=1 //给上面的空数组0号位赋值数字1
+```
+转化
+```js
+let arr = '1,2,3'.split(',')//split意为用什么分开
+
+let str2 ='123'
+str2.split('')//引号里没有字符 也能做出字符串
+
+Array.from('123')//把不是数组的变成数组
+Array.from(0:'a',1:'b',2:'c',3:'d',length:4)
+//有下标和长度，也能转为数组
+```
+伪数组
+```js
+fake ={0:'a',1:'b',2:'c',3:'d',length:4} 
+//他不含有数组的原型，所以不能进行pop，push等操作。
+//但看上去又像个数组 所以叫伪数组
+```
+
+譬如https://github.com/gracale/test/blob/main/div3.html
+这个网页的源代码，用指令
+```js
+let divList = document.querySelectorAll('div')
+console.dir(divList)
+//得到的divList就是一个伪数组，divList.pop(4)会报错。
+
+let divList = Array.from(divList)
+console.dir(divList)
+//真数组，divList.pop(4)会不会报错
+```
+
+合并数组
+```js
+arr1 = [3,3,3]
+arr2 = [4,4,4,4]
+arr1.concat(arr2)
+//输出(7) [3, 3, 3, 4, 4, 4, 4]
+```
+
+截取数组
+```js
+arr1 = [1,2,3,4,5,6,7]
+let arr2 = arr1.slice(2)//从第二个元素右边开始要
+let arr3 = arr1.slice(0)//从第零个，等价于复制
+```
