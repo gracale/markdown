@@ -1053,3 +1053,72 @@ arr.splice(2,1)
 //(7) [1, 2, 4, 5, 6, 7, 8]
 arr.splice(2,1,'x')//替换下标2的元素为'x'
 arr.splice(2,1,'x','y')//替换且在后面再塞一个'y'
+```
+
+查看所有数组属性
+```js
+let arr = [1,2,3,4,5]
+arr.x='xxx' //我们在数组里插入一个x
+
+//如何才能不要这个x，打印出数组的属性名和值呢
+Object.keys(arr)//打印出所有属性名，不对
+
+/* ===分割线=== */
+
+//既然xxx是后加的，那就打印到length的倒数第二就好了
+for (let i =0;i<arr.length;i++){
+  console.log(`${i}:${arr[i]}`) //`${}`只是一些符号，无特殊意思
+}
+
+//我们可以用forEach方法，他会自动帮我们循环length-1，然后输出
+arr.forEach(function(item,index,array){
+//3个参数：值，下标，整个数组（第三参数一般不传入）
+  console.log(`${index}:${item}`,array)
+})
+```
+那么这俩有啥区别？<br>
+区别是前者是for循环，能break和continue
+```js
+for (let i =0;i<arr.length;i++){
+    if(i%2===0){continue;}
+  console.log('下标'+`${i}:`+'值'+`${arr[i]}`)
+    if(i===4){break;}
+}
+//i为偶数就跳过，i到4就终止
+```
+
+查看单个属性
+```js
+arr[0]
+arr[arr.length] //索引越界，提示undefined
+```
+举例
+```js
+let arr = [1,2,3,4,5,6,7,8]
+for (let i = 0; i<=arr.length;i++){
+  console.log(arr[i].toString())
+}
+```
+Cannot read property 'toString' of undefined<br>
+无法将undefined对象转化成字符串<br>
+因为arr.length=8，没有下标为8的属性值<br>
+debug方法，他说哪个东西undefined就把哪个东西打印出来看
+```js
+for (let i = 0; i<=arr.length;i++){
+  console.log('属性索引'+i)
+  console.log('属性值'+arr[i])
+  console.log(arr[i].toString())
+}
+```
+
+查找某个元素是否在数组里
+```js
+let arr = [35,58,862,895]
+arr.indexOf(15)//查找15是否在，否返回-1
+arr.indexOf(862)//862在，返回索引2
+```
+条件查找
+```js
+arr.find(item => item<59)//查找第一个小于59的值
+arr.findIndex(item =>item%2 ===0)//查找第一个偶数的索引
+```
